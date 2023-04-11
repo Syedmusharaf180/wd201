@@ -4,9 +4,9 @@ const todoList = require('../todo')
 describe('TodoList Test Suite', () => {
   let todos
   const today = new Date()
-  const oneDay = 60 * 60 * 24 * 1000
-  const yesterday = new Date(today.getTime() - 1 * oneDay)
-  const tomorrow = new Date(today.getTime() + 1 * oneDay)
+  const day = 60 * 60 * 24 * 1000
+  const ytday = new Date(today.getTime() - 1 * day)
+  const tomorrow = new Date(today.getTime() + 1 * day)
 
   beforeEach(() => {
     todos = todoList()
@@ -27,15 +27,15 @@ describe('TodoList Test Suite', () => {
   })
 
   test('Should retrieve overdue items', () => {
-    todos.add({ title: 'Overdue Todo', dueDate: yesterday.toISOString().slice(0, 10), completed: false })
+    todos.add({ title: 'Overdue Todo', dueDate: ytday.toISOString().slice(0, 10), completed: false })
     todos.add({ title: 'Due Today Todo', dueDate: today.toISOString().slice(0, 10), completed: false })
     const overdueCount = todos.overdue().length
-    todos.add({ title: 'Overdue Todo 2', dueDate: yesterday.toISOString().slice(0, 10), completed: false })
+    todos.add({ title: 'Overdue Todo 2', dueDate: ytday.toISOString().slice(0, 10), completed: false })
     expect(todos.overdue().length).toBe(overdueCount + 1)
   })
 
   test('Should retrieve due today items', () => {
-    todos.add({ title: 'Overdue Todo', dueDate: yesterday.toISOString().slice(0, 10), completed: false })
+    todos.add({ title: 'Overdue Todo', dueDate: ytday.toISOString().slice(0, 10), completed: false })
     todos.add({ title: 'Due Today Todo', dueDate: today.toISOString().slice(0, 10), completed: false })
     const dueTodayCount = todos.dueToday().length
     todos.add({ title: 'Due Today Todo 2', dueDate: today.toISOString().slice(0, 10), completed: false })
@@ -43,7 +43,7 @@ describe('TodoList Test Suite', () => {
   })
 
   test('Should retrieve due later items', () => {
-    todos.add({ title: 'Overdue Todo', dueDate: yesterday.toISOString().slice(0, 10), completed: false })
+    todos.add({ title: 'Overdue Todo', dueDate: ytday.toISOString().slice(0, 10), completed: false })
     todos.add({ title: 'Due Today Todo', dueDate: today.toISOString().slice(0, 10), completed: false })
     todos.add({ title: 'Due Later Todo', dueDate: tomorrow.toISOString().slice(0, 10), completed: false })
     const dueLaterCount = todos.dueLater().length
